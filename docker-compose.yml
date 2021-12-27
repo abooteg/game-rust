@@ -1,0 +1,43 @@
+version: '2'
+services:
+    rust-server-sh-{ugid}:
+        container_name: 'rust-server-sh-{ugid}'
+        hostname: 'rust-server-sh-{ugid}'
+        image: 'survhost/game-rust'
+        cpuset: {Docker Affinity}
+        mem_limit: 8000m
+        ports:
+            - '{Custom1 Port}:{Custom1 Port}/udp'
+            - '{Port}:{Port}/udp'
+            - '{Rcon Port}:{Rcon Port}/udp'
+        volumes:
+            - /home/gsp_{uid}/{IP}-{PORT}/rust:/home/steam/rust-dedicated/
+        environment:
+            - RUST_SERVER_IP="{IP}"
+            - RUST_SERVER_PORT="{PORT}"
+            - RUST_APP_IP="{IP}"
+            - RUST_APP_PUBLIC_IP="{IP}"
+            - RUST_RCON_IP="{IP}"
+            - RUST_RCON_PORT="{Rcon Port}"
+            - RUST_RCON_PASSWORD="{RCON Password}"
+            - RUST_SERVER_RADIATION="{Радиация}"
+            - RUST_SERVER_HOSTNAME="{Название}"
+            - RUST_SERVER_LEVEL="{Карта}"
+            - RUST_SERVER_SEED="{Номер карты}"
+            - RUST_SERVER_MAXPLAYERS="{Количество слотов}"
+            - RUST_FPS_LIMIT="{fps.limit}"
+            - RUST_SERVER_WORLDSIZE="{Размер карты}"
+            - RUST_SERVER_SAVEINTERVAL="{Интервал сохранения}"
+            - RUST_SERVER_SECURE="{Valve Anti Cheat}"
+            - RUST_SERVER_URL="{Сайт}"
+            - RUST_SERVER_HEADERIMAGE="{Баннер сервера}"
+            - RUST_SERVER_SALT="{Генерация ресурсов}"
+            - RUST_SERVER_ENCRYPTION="{Шифрование}"
+            - RUST_CRAFT_INSTANT="{Мгновенный крафт}"
+            - RUST_LEVELURL="{Своя карта}"
+            - RUST_MAPURL="{Ссылка на карту}"
+            - RUST_SERVER_TAGS="{Игровые теги}"
+            - RUST_SERVER_GAMEMODE="{Игровой режим}"
+            - RUST_SERVER_DESCRIPTION="{Описание}"     
+        restart: unless-stopped
+

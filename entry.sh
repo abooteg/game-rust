@@ -6,50 +6,17 @@ bash "${STEAMCMDDIR}/steamcmd.sh" +force_install_dir "${STEAMAPPDIR}" \
 				+app_update "${STEAMAPPID}" \
 				+quit
 
-# Check if autoexec file exists. Easier to copy config between servers. (I was migrating when I wrote this)
-# Passing them directly to srcds_run to ignores values set in autoexec.cfg.
-autoexec_file="${STEAMAPPDIR}/${STEAMAPP}/cfg/autoexec.cfg"
-# Overwritable arguments
-ow_args=""
-
-if [ -f "$autoexec_file" ]; then
-        # TAB delimited name    default
-        # HERE doc to not add extra file
-        while IFS=$'\t' read -r name default
-        do
-                if ! grep -q "^\s*$name" "$autoexec_file"; then
-                        ow_args="${ow_args} $default"
-                fi
-        done <<EOM
-sv_password	+sv_password "${SRCDS_PW}"
-rcon_password	+rcon_password "${SRCDS_RCONPW}"
-EOM
-
-fi
-
 # Believe it or not, if you don't do this srcds_run shits itself
 cd "${STEAMAPPDIR}"
 
-bash "${STEAMAPPDIR}/srcds_run" -game "${STEAMAPP}" -console -autoupdate \
-			-steam_dir "${STEAMCMDDIR}" \
-			-steamcmd_script "${HOMEDIR}/${STEAMAPP}_update.txt" \
-			-usercon \
-			+fps_max "${SRCDS_FPSMAX}" \
-			-tickrate "${SRCDS_TICKRATE}" \
-			-port "${SRCDS_PORT}" \
-			+tv_port "${SRCDS_TV_PORT}" \
-			+clientport "${SRCDS_CLIENT_PORT}" \
-			-maxplayers_override "${SRCDS_MAXPLAYERS}" \
-			+game_type "${SRCDS_GAMETYPE}" \
-			+game_mode "${SRCDS_GAMEMODE}" \
-			+mapgroup "${SRCDS_MAPGROUP}" \
-			+map "${SRCDS_STARTMAP}" \
-			+sv_setsteamaccount "${SRCDS_TOKEN}" \
-			+sv_region "${SRCDS_REGION}" \
-			+net_public_adr "${SRCDS_NET_PUBLIC_ADDRESS}" \
-			-ip "${SRCDS_IP}" \
-			+host_workshop_collection "${SRCDS_HOST_WORKSHOP_COLLECTION}" \
-			+workshop_start_map "${SRCDS_WORKSHOP_START_MAP}" \
-			-authkey "${SRCDS_WORKSHOP_AUTHKEY}" \
-			"${ow_args}" \
+bash "${STEAMAPPDIR}/RustDedicated" -batchmode -nographics -keeplog +server.ip "${RUST_SERVER_IP}" \ 
+            +server.port "${RUST_SERVER_PORT}" +app.listenip "${RUST_APP_IP}" +app.publicip "${RUST_APP_PUBLIC_IP}" +rcon.ip "${RUST_RCON_IP}" \ 
+			+rcon.port "${RUST_RCON_PORT}" +rcon.password "${RUST_RCON_PASSWORD}" +oxide.directory "server/survivalhost.org/oxide" \ 
+			+server.radiation "${RUST_SERVER_RADIATION}" +server.hostname "${RUST_SERVER_HOSTNAME}" +server.identity "survivalhost.org" \ 
+			+server.level "${RUST_SERVER_LEVEL}" +server.seed "${RUST_SERVER_SEED}" +server.maxplayers "${RUST_SERVER_MAXPLAYERS}" \ 
+			+fps.limit "${RUST_FPS_LIMIT}" +server.worldsize "${RUST_SERVER_WORLDSIZE}" +server.saveinterval "${RUST_SERVER_SAVEINTERVAL}" \ 
+			+server.secure "${RUST_SERVER_SECURE}" +server.url "${RUST_SERVER_URL}" +server.headerimage "${RUST_SERVER_HEADERIMAGE}" \ 
+			+server.salt "${RUST_SERVER_SALT}" +server.encryption ${RUST_SERVER_ENCRYPTION} \ 
+			+craft.instant ${RUST_CRAFT_INSTANT} ${RUST_LEVELURL} ${RUST_MAPURL} -logfile ${STEAMAPPDIR}\server\survivalhost.org\server_log\console.log \ 
+			+server.tags "${RUST_SERVER_TAGS}" +server.gamemode "${RUST_SERVER_GAMEMODE}" +server.description "${RUST_SERVER_DESCRIPTION}" \
 			"${ADDITIONAL_ARGS}"
