@@ -9,7 +9,7 @@ bash "${STEAMCMDDIR}/steamcmd.sh" +force_install_dir "${STEAMAPPDIR}" \
 # Believe it or not, if you don't do this srcds_run shits itself
 cd "${STEAMAPPDIR}"
 
-./RustDedicated -batchmode -nographics -keeplog +server.ip "${RUST_SERVER_IP}" \ 
+bash "./RustDedicated" -batchmode -nographics -keeplog +server.ip "${RUST_SERVER_IP}" \ 
             +server.port "${RUST_SERVER_PORT}" +app.listenip "${RUST_APP_IP}" +app.publicip "${RUST_APP_PUBLIC_IP}" +rcon.ip "${RUST_RCON_IP}" \ 
 			+rcon.port "${RUST_RCON_PORT}" +rcon.password "${RUST_RCON_PASSWORD}" +oxide.directory "server/survivalhost.org/oxide" \ 
 			+server.radiation "${RUST_SERVER_RADIATION}" +server.hostname "${RUST_SERVER_HOSTNAME}" +server.identity "survivalhost.org" \ 

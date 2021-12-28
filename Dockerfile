@@ -18,6 +18,7 @@ RUN set -x \
 		wget \
 		ca-certificates \
 		lib32z1 \
+		libsqlite3-0 \
 	&& mkdir -p "${STEAMAPPDIR}" \
 	&& wget --max-redirect=30 "${DLURL}" -O "${HOMEDIR}/entry.sh" \
 	&& { \
@@ -61,8 +62,6 @@ ENV RUST_SERVER_IP="0" \
 	RUST_SERVER_GAMEMODE="vanilla" \
 	RUST_SERVER_DESCRIPTION="Hosted by hostingrust.ru" \
 	ADDITIONAL_ARGS=""
-
-USER ${USER}
 
 VOLUME ${STEAMAPPDIR}
 
