@@ -19,5 +19,5 @@ cd "${STEAMAPPDIR}"
 	   +server.secure "${RUST_SERVER_SECURE}" +server.url "${RUST_SERVER_URL}" +server.headerimage "${RUST_SERVER_HEADERIMAGE}" \
 	    +server.salt "${RUST_SERVER_SALT}" +server.encryption ${RUST_SERVER_ENCRYPTION} \
 		 +craft.instant ${RUST_CRAFT_INSTANT} ${RUST_LEVELURL} ${RUST_MAPURL} \
-		  -logfile ${STEAMAPPDIR}\server\survivalhost.org\server_log\console.log +server.tags "${RUST_SERVER_TAGS}" \
+		 +server.tags "${RUST_SERVER_TAGS}" \
 		   +server.gamemode "${RUST_SERVER_GAMEMODE}" +server.description "${RUST_SERVER_DESCRIPTION}" "${ADDITIONAL_ARGS}"
